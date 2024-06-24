@@ -152,7 +152,7 @@ func New(i2c *i2c.Options, opt ...regOption) (*MCP23017, error) {
 
 	// fix if mode IOCON.BANK = 1
 	if err := mcp.writeReg(IOCON, 0x00); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error writing iocon.bank=1: %w", err)
 	}
 
 	iocon := BANK
@@ -164,31 +164,31 @@ func New(i2c *i2c.Options, opt ...regOption) (*MCP23017, error) {
 
 	//in default mode IOCON.BANK = 0 and IOCON addres = 0x10
 	if err := mcp.writeReg(OLAT, byte(iocon)); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error writing iocon.bank=0: %w", err)
 	}
 
 	// set inputs mode on all pins
 	if err := mcp.writeReg(IODIR, 0xff); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error setting pin input mode 1: %w", err)
 	}
 	if err := mcp.writeReg(IODIR|16, 0xff); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error setting pin input mode 16: %w", err)
 	}
 
 	// Turn off interrupt triggers
 	if err := mcp.writeReg(GPINTEN, 0x00); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error setting interrupt triggers mode 1: %w", err)
 	}
 	if err := mcp.writeReg(GPINTEN|16, 0x00); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error setting interrupt triggers mode 16: %w", err)
 	}
 
 	// Turn off pull up resistors
 	if err := mcp.writeReg(GPPU, 0x00); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error setting pull ups mode 1: %w", err)
 	}
 	if err := mcp.writeReg(GPPU|16, 0x00); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error setting pull ups mode 16: %w", err)
 	}
 
 	return mcp, nil
