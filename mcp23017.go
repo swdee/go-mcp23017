@@ -25,12 +25,11 @@ package mcp23017
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 	"sync"
 
-	"github.com/googolgl/go-i2c"
+	"github.com/swdee/go-i2c"
 )
 
 type (
@@ -250,7 +249,6 @@ func (mcp *MCP23017) Get(p Pins) (map[string]uint8, error) {
 func (mcp *MCP23017) Set(p Pins) *ModeBanks {
 	mBanks, err := checkValidPins(p)
 	if err != nil {
-		log.Fatalln(err)
 		return nil
 	}
 
@@ -309,37 +307,37 @@ func (mb *ModeBanks) modeSet(r, w regAddres) error {
 	return nil
 }
 
-//INPUT - set input mode for pins
+// INPUT - set input mode for pins
 func (mb *ModeBanks) INPUT() error {
 	mb.xFF = true
 	return mb.modeSet(IODIR, IODIR)
 }
 
-//OUTPUT - set output mode for pins
+// OUTPUT - set output mode for pins
 func (mb *ModeBanks) OUTPUT() error {
 	mb.xFF = false
 	return mb.modeSet(IODIR, IODIR)
 }
 
-//HIGH - set high mode for pins
+// HIGH - set high mode for pins
 func (mb *ModeBanks) HIGH() error {
 	mb.xFF = true
 	return mb.modeSet(OLAT, OLAT)
 }
 
-//LOW - set low mode for pins
+// LOW - set low mode for pins
 func (mb *ModeBanks) LOW() error {
 	mb.xFF = false
 	return mb.modeSet(OLAT, OLAT)
 }
 
-//PULLUP - turn on pull up resistors
+// PULLUP - turn on pull up resistors
 func (mb *ModeBanks) PULLUP() error {
 	mb.xFF = true
 	return mb.modeSet(GPPU, GPPU)
 }
 
-//PULLDOWN - turn off pull up resistors
+// PULLDOWN - turn off pull up resistors
 func (mb *ModeBanks) PULLDOWN() error {
 	mb.xFF = false
 	return mb.modeSet(GPPU, GPPU)
