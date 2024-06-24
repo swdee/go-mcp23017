@@ -1,4 +1,4 @@
-module github.com/googolgl/go-mcp23017
+module github.com/swdee/go-mcp23017
 
 go 1.15
 
