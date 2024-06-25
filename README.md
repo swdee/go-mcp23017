@@ -81,7 +81,7 @@ Installation
 ------------
 
 ```bash
-$ go get -u github.com/googolgl/go-mcp23017
+$ go get -u github.com/swdee/go-mcp23017
 ```
 
 Troubleshooting
